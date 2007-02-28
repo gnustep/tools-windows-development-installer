@@ -1,0 +1,13 @@
+tmp=/usr/installer/temp
+failed=$tmp/BACK-INSTALLATION-TEST-FAILED
+succeeded=$tmp/BACK-INSTALLATION-TEST-SUCCEEDED
+
+if [ -s $GNUSTEP_SYSTEM_ROOT/Library/Bundles/libgnustep-back-[@$interface_version_number@].bundle/libgnustep-back-[@$interface_version_number@].dll ]
+then
+  echo back seems to have been compiled
+  mkdir $succeeded
+else
+  echo back seems not to have been compiled
+  mkdir $failed
+  sh /usr/installer/create-log-tar.sh
+fi

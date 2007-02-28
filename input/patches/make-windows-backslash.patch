@@ -1,0 +1,11 @@
+--- make/GNUstep.sh.in.org	Mon Apr  3 10:07:04 2006
++++ make/GNUstep.sh.in	Mon Apr  3 10:07:21 2006
+@@ -209,7 +209,7 @@
+ if [ -z "$GNUSTEP_PATHLIST" ]; then
+ 
+   # If we need to convert win32 paths, this is the time!
+-  if [ -z "`echo $GNUSTEP_SYSTEM_ROOT | sed 's|^[a-zA-Z]:/.*$||'`" ]; then
++  if [ -z "`echo $GNUSTEP_SYSTEM_ROOT | sed 's|^[a-zA-Z]:[/\\].*$||'`" ]; then
+     G_U_R=`$GNUSTEP_MAKEFILES/fixpath.sh -u "$GNUSTEP_USER_ROOT"`
+     G_L_R=`$GNUSTEP_MAKEFILES/fixpath.sh -u "$GNUSTEP_LOCAL_ROOT"`
+     G_N_R=`$GNUSTEP_MAKEFILES/fixpath.sh -u "$GNUSTEP_NETWORK_ROOT"`

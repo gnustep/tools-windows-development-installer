@@ -1,0 +1,219 @@
+[Setup]
+AppName=GNUstep Development environment
+AppVerName=GNUstep Development environment [@ "$installerVersion" @]
+AppId=GNUstep Development environment [@ $injectCustomPatches?"with Custom patches ":''@][@ $injectBinaries?"with binaries ":''@]0.1
+UninstallDisplayName=GNUstep Development environment [@ "$installerVersion" @]
+AppVersion=[@ "$installerVersion" @]
+DefaultDirName={sd}\GNUstep
+DefaultGroupName=GNUstep Development
+InfoBeforeFile=infobefore.txt
+[@ if ($compression)
+   {"Compression=lzma/ultra\nSolidCompression=yes"}
+   else
+   {""}
+@]
+UninstallFilesDir={app}\Development\uninstall
+OutputBaseFilename=[@$installerName@]
+MinVersion=0,4
+PrivilegesRequired=PowerUser
+DisableStartupPrompt=yes
+AllowNoIcons=yes
+[@ if (!$injectBinaries)
+   {"Uninstallable=no"}
+   else
+   {''}
+@]
+WizardImageFile=compiler:WizModernImage-IS.bmp
+WizardSmallImageFile=gnustep-logo.bmp
+AppMutex=MSYS-1.0
+UninstallDisplayIcon={app}\gnustep-logo-32x32.ico
+
+[Icons]
+Name: "{group}\MSYS for GNUstep"; Filename: "{app}\Development\msys\1.0\msys.bat"; WorkingDir: "{app}\Development\msys\1.0"; IconFilename: "{app}\gnustep-logo-32x32.ico"; Comment: "MSYS for GNUstep [@ "$installerVersion" @]"
+Name: "{commondesktop}\MSYS for GNUstep"; Filename: "{app}\Development\msys\1.0\msys.bat"; WorkingDir: "{app}\Development\msys\1.0"; IconFilename: "{app}\gnustep-logo-32x32.ico"; Comment: "MSYS for GNUstep [@ "$installerVersion" @]"
+
+[Files]
+Source: "gnustep-logo-32x32.ico"; DestDir: "{app}"
+Source: "versions.txt"; DestDir: "{app}"
+[@
+  if ($injectBinaries)
+  {'Source: "'.$relativeGNUstepInstallDir.'\GNUstep.conf-dev"; DestDir: "{app}"; Components: copy'}
+  else
+  {''} 
+@]
+Source: "[@ $doc_path @]\BUGS"; DestDir: "{app}"
+Source: "[@ $scripts_path @]\*.*"; DestDir: "{app}\Development\msys\1.0\installer"; Excludes: "CVS\*,.svn\*,.cvsignore,*~,*.template"
+Source: "[@ $msys_path @]\*.*"; DestDir: "{app}\Development"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+Source: "[@ $make_path @]\*.*"; DestDir:"{app}\Development\Source\make"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+Source: "[@ $ffcall_path @]\*.*"; DestDir:"{app}\Development\Source\ffcall"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+Source: "[@ $libobjc_path @]\*.*"; DestDir:"{app}\Development\Source\libobjc"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+Source: "[@ $libiconv_path @]\*.*"; DestDir:"{app}\Development\Source\iconv"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+Source: "[@ $libintl_path @]\*.*"; DestDir:"{app}\Development\Source\intl"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+Source: "[@ $libiconv_path @]\*.*"; DestDir:"{app}\Development\msys\1.0\mingw"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+Source: "[@ $libintl_path @]\*.*"; DestDir:"{app}\Development\msys\1.0\mingw"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+Source: "[@ $zlib_path @]\*.*"; DestDir:"{app}\Development\Source\zlib"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+Source: "[@ $zlib_path @]\*.*"; DestDir:"{app}\Development\msys\1.0\mingw"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+Source: "[@ $base_path @]\*.*"; DestDir:"{app}\Development\Source\base"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+Source:	"[@ $patches_path @]\*"; DestDir:"{app}\Development\Source\patches"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+[@
+  if ($injectCustomPatches)
+  {'Source: "patches-Custom\*"; DestDir:"{app}\Development\Source\patches-Custom"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"'}
+  else
+  {''} 
+@]
+[@
+  if ($injectBinaries)
+  {'Source: "'.$relativeGNUstepInstallDir.'\System\*"; DestDir:"{app}\System"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"; Components: copy'}
+  else
+  {''} 
+@]
+Source: "[@ $libtiff_path @]\*.*"; DestDir:"{app}\Development\Source\libtiff"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+Source: "[@ $libtiff_path @]\*.*"; DestDir:"{app}\Development\msys\1.0\mingw"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+Source: "[@ $libpng_path @]\*.*"; DestDir:"{app}\Development\Source\libpng"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+Source: "[@ $libpng_path @]\*.*"; DestDir:"{app}\Development\msys\1.0\mingw"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+Source: "[@ $libjpeg_path @]\*.*"; DestDir:"{app}\Development\Source\libjpeg"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+Source: "[@ $libjpeg_path @]\*.*"; DestDir:"{app}\Development\msys\1.0\mingw"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+Source: "[@ $gui_path @]\*.*"; DestDir:"{app}\Development\Source\gui"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+Source: "[@ $back_path @]\*.*"; DestDir:"{app}\Development\Source\back"; Flags: recursesubdirs restartreplace uninsrestartdelete; Excludes: "CVS\*,.svn\*,.cvsignore,*~"
+
+[Dirs]
+Name: "{app}\Development\msys\1.0\etc\profile.d"
+Name: "{app}\Development\msys\1.0\installer\temp"
+Name: "{app}\Development\msys\1.0\installer\log"
+[@
+  if ($injectBinaries)
+  {'Name: "{app}\Library"; Components: copy'."\n".
+   'Name: "{app}\Local"; Components: copy'."\n".
+   'Name: "{app}\Network"; Components: copy'}
+  else
+  {''}
+@] 
+
+[UninstallDelete]
+Type: filesandordirs; Name: "{app}\Development"
+Type: filesandordirs; Name: "{app}\installer.tar.bz2"
+
+[Types]
+[@ if ($injectBinaries) {'Name: "copyall"; Description: "Install all source plus binaries for base and gui"'."\n"} else {''} @]
+Name: "build";   Description: "Install all source and build binaries for base and gui"
+Name: "onlysource"; Description: "Install all source"
+
+[Components]
+[@ if ($injectBinaries) 
+   {'Name: copy; Description: "Copy"; Types: copyall; Flags: exclusive'."\n"} else {''} @]
+Name: build; Description: "Build"; Types: build; Flags: exclusive
+
+[Run]
+; Logging mount points
+Filename:"{cmd}"; Description: "Logging mount points";               Parameters: "/C """"{app}\Development\msys\1.0\installer\run-msys.bat"" ""{app}\Development"" ""mount > /usr/installer/log/01-mount.log"""; StatusMsg: "Logging mount points"; Flags: runminimized
+
+; Setting /etc/fstab
+Filename:"{cmd}"; Description: "Setting /etc/fstab";                 Parameters: "/C """"{app}\Development\msys\1.0\installer\fstab.bat"" ""{code:ShortApp}"""""; StatusMsg: "Putting mountpoints in /etc/fstab"; Flags: runminimized
+
+; Logging mount points again
+Filename:"{cmd}"; Description: "Logging mount points";               Parameters: "/C """"{app}\Development\msys\1.0\installer\run-msys.bat"" ""{app}\Development"" ""mount > /usr/installer/log/02-mount.log"""; StatusMsg: "Logging mount points"; Flags: runminimized
+
+; Applying patches
+Filename:"{cmd}"; Description: "Applying patches"; Parameters: "/C """"{app}\Development\msys\1.0\installer\run-msys.bat"" ""{app}\Development"" ""sh /usr/installer/apply-patches.sh 2>&1 | tee /usr/installer/log/03a-apply-patches.log"""; StatusMsg: "Applying patches"; Flags: runminimized
+
+; Building GNUstep make
+Filename:"{cmd}"; Description: "Building GNUstep make";              Parameters: "/C """"{app}\Development\msys\1.0\installer\run-msys.bat"" ""{app}\Development"" ""sh /usr/installer/install-make.sh 2>&1 | tee /usr/installer/log/03-install-make.log"""; StatusMsg: "Building GNUstep make"; Components: build; Flags: runminimized
+
+[@
+  if ($injectBinaries)
+  {'; Fixing GNUstep.sh'."\n".
+   'Filename:"{cmd}"; Description: "Fixing up GNUstep.sh for new location"; Parameters: "/C """"{app}\Development\msys\1.0\installer\run-msys.bat"" ""{app}\Development"" ""sh /usr/installer/replace-gnustep-system-root.sh | tee /usr/installer/log/03b-replace-gnustep-system-root.log"""; StatusMsg: "Fixing up GNUStep.sh"; Components: copy; Flags: runminimized'."\n"}
+  else
+  {''}
+@]
+; Building ffcall, libobjc and base
+Filename:"{cmd}"; Description: "Building ffcall, libobjc and base";  Parameters: "/C """"{app}\Development\msys\1.0\installer\run-msys.bat"" ""{app}\Development"" ""sh /usr/installer/install-base.sh 2>&1 | tee /usr/installer/log/04-install-base.log"""; StatusMsg: "Building ffcall, libobjc, base"; Components: build; Flags: runminimized
+
+; Building gui and back
+Filename:"{cmd}"; Description: "Building gui and back";              Parameters: "/C """"{app}\Development\msys\1.0\installer\run-msys.bat"" ""{app}\Development"" ""sh /usr/installer/install-gui.sh 2>&1 | tee /usr/installer/log/05-install-gui.log"""; StatusMsg: "Building gui and back"; Components: build; Flags: runminimized
+
+; Logging the environment
+Filename:"{cmd}"; Description: "Logging environment";                Parameters: "/C """"{app}\Development\msys\1.0\installer\run-msys.bat"" ""{app}\Development"" ""env | sort > /usr/installer/log/06-env.log"""; StatusMsg: "Logging environment"; Flags: runminimized
+
+; Copy the service starting scripts
+;Filename:"{cmd}"; Description: "Install base services start script"; Parameters: "/C """"{app}\Development\msys\1.0\installer\run-msys.bat"" ""{app}\Development"" ""cp /usr/installer/start-base-services.sh /etc/profile.d/03-start-base-services.sh"""; StatusMsg: "Install base services start script"; Flags: runminimized; Components: [@ if ($injectBinaries) {'copy or '} else {''}@] build
+;Filename:"{cmd}"; Description: "Install gui services start script";  Parameters: "/C """"{app}\Development\msys\1.0\installer\run-msys.bat"" ""{app}\Development"" ""cp /usr/installer/start-gui-services.sh /etc/profile.d/04-start-gui-services.sh"""; StatusMsg: "Install gui services start script"; Flags: runminimized; Components: [@ if ($injectBinaries) {'copy or '} else {''}@] build
+
+; Test for success of base build
+Filename:"{cmd}"; Description: "Testing succes of base build";        Parameters: "/C """"{app}\Development\msys\1.0\installer\run-msys.bat"" ""{app}\Development"" ""sh /usr/installer/test-base-installation.sh 2>&1 | tee /usr/installer/log/08-test-base-installation.log"""; StatusMsg: "Testing success of base build"; Flags:runminimized; Components: [@ if ($injectBinaries) {'copy or '} else {''}@] build
+
+; Test for success of gui build
+Filename:"{cmd}"; Description: "Testing succes of gui build";         Parameters: "/C """"{app}\Development\msys\1.0\installer\run-msys.bat"" ""{app}\Development"" ""sh /usr/installer/test-gui-installation.sh 2>&1 | tee /usr/installer/log/09-test-gui-installation.log"""; StatusMsg: "Testing success of gui build"; Flags:runminimized; Components: [@ if ($injectBinaries) {'copy or '} else {''}@] build
+
+; Test for success of back build
+Filename:"{cmd}"; Description: "Testing succes of back build";        Parameters: "/C """"{app}\Development\msys\1.0\installer\run-msys.bat"" ""{app}\Development"" ""sh /usr/installer/test-back-installation.sh 2>&1 | tee /usr/installer/log/10-test-back-installation.log"""; StatusMsg: "Testing success of back build"; Flags:runminimized; Components: [@ if ($injectBinaries) {'copy or '} else {''}@] build
+
+; Run shell
+Filename:"{app}\Development\msys\1.0.\msys.bat"; Description: "Run msys shell"; Flags: postinstall shellexec skipifsilent unchecked
+
+[Messages]
+FinishedLabel=Setup has finished installing [name] on your computer. You should now be able to build GNUstep applications from the MSYS command line.
+
+[Code]
+function UpdateReadyMemo(Space, NewLine, MemoUserInfoInfo, MemoDirInfo, MemoTypeInfo, MemoComponentsInfo, MemoGroupInfo, MemoTasksInfo: String): String;
+var
+  S: String;
+  gnustep_system_root: String;
+  offset: Integer;
+  buildGNUstep: Boolean;
+begin
+  { Fill the 'Ready Memo' with the normal settings and the custom settings }
+  S := '';
+  offset := Length('Destination directory:')+Length(NewLine)+Length(Space);
+  gnustep_system_root := Copy(MemoDirInfo, offset, Length(MemoDirInfo)-offset+1);
+  buildGNUstep := (Length(MemoTasksInfo)>0);
+
+  S := S + MemoDirInfo + NewLine;
+  if (buildGNUstep) then
+    S := S + 'GNUSTEP_SYSTEM_ROOT:' + NewLine + Space + gnustep_system_root + NewLine;
+  S := S + 'Sources:' + NewLine + Space + gnustep_system_root + '\Development\Source' + NewLine;
+  S := S + 'MSYS shell:' + NewLine + Space + gnustep_system_root + '\Development\msys' + NewLine;
+  S := S + NewLine;
+  S := S + MemoGroupInfo + NewLine + NewLine;
+
+  S := S + 'Logs of building binaries:' + NewLine + Space + gnustep_system_root + '\Development\msys\1.0\installer\log\' + NewLine;
+
+  Result := S;
+end;
+
+
+function ShouldSkipPage(PageID: Integer): Boolean;
+begin
+  Result := false;
+  
+  if PageID = wpFinished then
+  begin
+    if DirExists(ExpandConstant('{app}')+'\Development\MSYS\1.0\Installer\temp\INSTALLATION-BASE-TEST-FAILED') then
+    begin
+      Result := true;
+      MsgBox( 'Building the base library failed. Either you pressed CTRL-C, or you encountered a bug. In the latter case please read '+ExpandConstant('{app}')+'\BUGS to see what to do.', mbCriticalError, MB_OK );
+    end
+    else
+        if DirExists(ExpandConstant('{app}')+'\Development\MSYS\1.0\Installer\temp\INSTALLATION-GUI-TEST-FAILED') then
+    	begin
+      	  Result := true;
+      	  MsgBox( 'Building the gui library failed. Either you pressed CTRL-C, or you encountered a bug. In the latter case please read '+ExpandConstant('{app}')+'\BUGS to see what to do.', mbCriticalError, MB_OK );
+	end
+    	else
+            if DirExists(ExpandConstant('{app}')+'\Development\MSYS\1.0\Installer\temp\INSTALLATION-BACK-TEST-FAILED') then
+    	    begin
+      	      Result := true;
+      	      MsgBox( 'Building the back library failed. Either you pressed CTRL-C, or you encountered a bug. In the latter case please read '+ExpandConstant('{app}')+'\BUGS to see what to do.', mbCriticalError, MB_OK );
+	      end;
+  end;
+end;
+
+
+function ShortApp(Param:String): String;
+begin
+  Result := ExpandConstant('{app}');
+  if Pos( ' ', ExpandConstant('{app}') ) > 0 then
+  begin
+    Result := GetShortName(ExpandConstant('{app}'));
+  end
+end;

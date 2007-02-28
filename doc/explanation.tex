@@ -1,0 +1,140 @@
+\documentclass{article}
+
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage[pdftex]{graphicx}
+
+\newcommand{\comment}[1]{}
+
+\begin{document}
+
+\title{The GNUstep development installer}
+\author{Tom Koelman}
+\date{November 21, 2005}
+
+\maketitle
+
+
+
+This document describes what the Windows GNUstep development installer
+does.
+
+\section{Contents of the installer}
+
+Basically it contains
+
+\begin{itemize}
+\item a shell
+\item source
+\item libraries
+\item some scripts to compile the source
+\item some patches on the source
+\item some precompiled binaries if you decide not to compile the source
+\end{itemize}
+
+The shell is msys + mingw.
+
+The source is
+
+\begin{itemize}
+\item ffcall
+\item libobjc
+\item base
+\item gui
+\item back
+\item make
+\end{itemize}
+
+The libraries are
+
+\begin{itemize}
+\item jpeg
+\item iconv
+\item png
+\item tiff
+\item zlib
+\end{itemize}
+
+
+\section{Overview of running the installer}
+It allows one to choose what it should do.
+
+The choices are
+
+\begin{description}
+\item[Install all source plus binaries for base and gui] This would install everything to one directory, plus all already
+compiled libraries of base and gui
+\end{description}
+
+\begin{description}
+\item[Install all source and build binaries for base and gui] Installs everything to one directory, and then runs the scripts to
+compile everything.
+\end{description}
+
+\begin{description}
+\item[Install all source] Just installs everything and does nothing smart.
+\end{description}
+
+
+\section{Where is everything installed}
+If you really want to figure out what happens, you could run the
+``Install all source'' option and the look at the installed files. Say
+you installed to \begin{quote}
+\begin{verbatim}c:\\GNUstep\end{verbatim}
+\end{quote}
+
+Now all sources are installed in \begin{quote}
+\begin{verbatim}c:\\GNUstep\\Development\\Source\end{verbatim}
+\end{quote} The
+sources are actually nothing more than the unpacked tar files.
+The most interesting of the source directories is probably
+\begin{quote}
+\begin{verbatim}c:\\GNUstep\\Development\\Source\\patches\end{verbatim}
+\end{quote} where you can find out what the
+installer has patched for you.
+
+Now take a look at \begin{quote}
+\begin{verbatim}c:\\GNUstep\\Development\\msys\\1.0\\installer\end{verbatim}
+\end{quote} This
+contains all the scripts that would be run to compile the source. For
+example, it contains the apply-patches.sh script that iterates over
+all the patches in \begin{quote}
+\begin{verbatim}c:\\GNUstep\\Development\\Source\\patches\end{verbatim}
+\end{quote} and applies
+them.
+The subdirectory log here contains all the logging that was created during
+the running of the installer. If you would actually have let the
+installer compile for you, this one would contain interesting
+logs. The temp directory here is used for miscellaneous purposes in
+the scripts.
+
+
+\section{Compiling}
+All needed source is already untarred. Basically what the compile
+scripts do is follow the recipe of the README.MinGW file. All
+configuring and making and such is logged in
+\begin{quote}
+\begin{verbatim}c:\\GNUstep\\Development\\msys\\1.0\\installer\\log\end{verbatim}
+\end{quote}
+
+
+\section{Prebuilt binaries}
+Actually, when the installer itself is built, first a version is
+created that doesn't contain the binaries. Then it is run with the
+option to compile everything from scratch. When that succeeds, a new
+installer is built containing everything the original installer
+contained plus the newly built binaries. In effect, the binaries that
+are included are the ones in \begin{quote}
+\begin{verbatim}c:\\GNUstep\\System\end{verbatim}
+\end{quote}
+
+After all is installed, the installer runs the
+replace-gnustep-system-root.sh script. It changes the GNUstep.sh
+script to contain the location of where the binaries are installed
+instead of where they were originally compiled.
+
+
+
+\end{document}

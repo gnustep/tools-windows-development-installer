@@ -1,0 +1,42 @@
+diff -ur ffcall.org/avcall/configure ffcall/avcall/configure
+--- ffcall.org/avcall/configure	Wed Mar 17 18:24:49 2004
++++ ffcall/avcall/configure	Fri Mar 11 17:33:30 2005
+@@ -8028,8 +8028,8 @@
+ float y = (float)1.3;
+ float fun () { return x*y; }
+ int main()
+-{ int val = (* (int (*) ()) fun) ();
+-  exit (!(val == 0x3FC7AE15 || val == 0x15AEC73F));
++{ 
++  exit 0;
+ }
+ _ACEOF
+ rm -f conftest$ac_exeext
+diff -ur ffcall.org/callback/vacall_r/configure ffcall/callback/vacall_r/configure
+--- ffcall.org/callback/vacall_r/configure	Wed Mar 17 18:24:52 2004
++++ ffcall/callback/vacall_r/configure	Fri Mar 11 17:33:59 2005
+@@ -8028,8 +8028,8 @@
+ float y = (float)1.3;
+ float fun () { return x*y; }
+ int main()
+-{ int val = (* (int (*) ()) fun) ();
+-  exit (!(val == 0x3FC7AE15 || val == 0x15AEC73F));
++{ 
++  exit 0;
+ }
+ _ACEOF
+ rm -f conftest$ac_exeext
+diff -ur ffcall.org/vacall/configure ffcall/vacall/configure
+--- ffcall.org/vacall/configure	Fri Mar 19 14:14:19 2004
++++ ffcall/vacall/configure	Fri Mar 11 17:34:13 2005
+@@ -3110,8 +3110,8 @@
+ float y = (float)1.3;
+ float fun () { return x*y; }
+ int main()
+-{ int val = (* (int (*) ()) fun) ();
+-  exit (!(val == 0x3FC7AE15 || val == 0x15AEC73F));
++{ 
++  exit 0;
+ }
+ _ACEOF
+ rm -f conftest$ac_exeext

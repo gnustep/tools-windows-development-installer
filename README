@@ -1,0 +1,74 @@
+Introduction
+------------
+
+This README describes how to build a GNUstep development installer.
+
+Short instructions
+------------------
+
+The basic way of building an installer is by running:
+
+perl make.pl -packagespath input
+
+Where "input" is the directory containing the external packages.
+Also help is available by
+
+perl make.pl -man
+
+
+External packages going into the installer
+-----------------------------------------
+The external packages are files that we want to have installed.
+They should all appear in one directory and follow the following 
+naming pattern:
+
+PATTERN			  EXAMPLE FILE NAME		  DESCRIPTION
+
+MinGW-(.*).exe		 - MinGW-3.1.0.1.exe		- The build tools
+MSYS-(.*).exe		 - MSYS-1.0.9.exe		- The tools needed for .configure
+ffcall-(.*).tar.gz	 - ffcall-1.8d.tar.gz		- The foreign function interface
+gnustep-make-(.*).tar.gz - gnustep-make-1.9.1.tar.gz	- The Gnustep make package
+gnustep-objc-(.*).tar.gz - gnustep-objc-1.3.0.tar.gz	- The ObjC runtime
+gnustep-base-(.*).tar.gz - gnustep-base-1.9.1.tar.gz	- The base library
+gnustep-gui-(.*).tar.gz  - gnustep-gui-0.9.4.tar.gz     - The gui library
+gnustep-back-(.*).tar.gz - gnustep-back-0.9.4.tar.gz	- The backend
+libiconv.*.bin.woe32.zip - libiconv-1.9.1.bin.woe32.zip - The character encoding library
+jpeg.*.zip		 - jpeg-6b-3-bin.zip		- The jpeg library
+libpng.*.zip		 - libpng-1.2.8-bin.zip		- The png library
+tiff.*.zip		 - tiff-3.7.1-bin.zip		- The TIFF library
+zlib.*.zip		 - zlib-1.2.2-bin.zip		- The z library
+gdb.*.exe		 - gdb-20040521-1.exe		- GDB, the debugger
+patches                  - patches			- Directory containing generic patches
+patches-Custom		 - patches-Custom		- Directory containing custom patches
+
+
+Supporting files going into the installer
+-----------------------------------------
+In the scripts directory are all the support files that are needed to 
+actually do the complete build after the sources unpacked on the
+target machine.  These scripts are obviously also put in the installer.
+
+The list of scripts is rather long, but here it goes
+
+NAME OF SCRIPT		- TYPE	- DESCRIPTION
+
+apply-patches.sh	- bash	- Apply patches to the source tree
+create-log-tar.sh	- bash 	- At the end create log file of the result
+create-set-gnustep-intall-dir.sh
+			- bash	- create /etc/profile.d file for MinGW that
+				  sets the gnustep installation directory
+fstab.bat		- DOS	- create fstab file and set initial envirionment
+fstab.sh		- bash  - used by fstab.bat
+install-base.sh		- bash	- builds ffcall, libobjc, base and copies some
+				  DLL's and libraries to the right location
+install-make.sh		- bash	- configures and installs make, also
+				  removes mingw's libobjc files
+install-gui.sh		- bash  - build gui and back and copies some DLL's and 
+			  	  libraries to the right location
+run-msys.bat		- DOS	- Runs a bash script in the msys shell.
+set-gnustep-system.sh	- bash	- Set the main environment variables and source GNUstep.sh
+test-base-installation-success.sh 
+			- bash	- Test if the base build succeeded by running a simple program
+test-gui-installation-success.sh
+			- bash  - Test if the gui build succeeded by checing the existence of
+			  	  the gnustep-gui.dll file

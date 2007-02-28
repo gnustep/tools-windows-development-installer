@@ -1,0 +1,165 @@
+!!READ BEFORE YOU INSTALL!!
+---------------------------
+
+* Do NOT install in a non-empty directory.
+* If you have already GNUstep installed:
+     Either make sure that the GNUSTEP_* environment variables
+     are NOT set, or install into the parent directory of the
+     GNUSTEP_SYSTEM_DIR (or the parent of GNUSTEP_SYSTEM_ROOT).
+     So if GNUSTEP_SYSTEM_DIR=X:\GNUstep\System
+     install in X:\GNUstep.
+
+
+
+GNUstep Development installer base-1.11.1-gui-0.10.1
+----------------------------------------------------
+This package contains all files necessary to build GNUstep base on a
+Windows system. Optionally the shared base and gui libraries can be
+installed as well.
+
+It will install MinGW libraries and the MSYS shell to be able to build
+stuff. It will install all sources of GNUstep make, ffcall, libobjc,
+base, gui and back as well as iconv, zlib, libjpeg, libtiff and libpng
+binaries.
+
+The installer lets you choose whether to build all libraries from
+source or to install pre-built binaries.
+
+The versions this installer contains are as follows:
+
+base version 1.11.1 (unstable)	- gnustep-base-1.11.1.tar.gz
+make version 1.11.1 (unstable)	- gnustep-make-1.11.1.tar.gz
+gui version 0.10.1 (unstable)	- gnustep-gui-0.10.1.tar.gz
+back version 0.10.1 (unstable)	- gnustep-back-0.10.1.tar.gz
+libobjc snapshot 20051010	- from dev-libs.20051010.tar.bz2
+ffcall version 1.9 (*)		- ffcall-1.10.tar.gz
+iconv version 1.8.1		- libiconv-1.8-1-*.zip
+libjpeg 6b    			- jpeg-6b-3-*.zip
+libpng 1.2.8			- libpng-1.2.8-*.zip
+libtiff 3.7.1			- tiff-3.7.1-*.zip
+zlib 1.2.2			- zlib-1.2.2-*.zip
+MinGW version 5.0.0		- MinGW-5.0.0.exe
+      	      			   - binutils-2.15.91-20040904-1.tar.gz
+				   - gcc-core-3.4.2-20040916-1.tar.gz
+				   - gcc-objc-3.4.2-20040916-1.tar.gz
+				   - mingw-runtime-3.8.tar.gz
+				   - w32api-3.3.tar.gz
+MSYS version 1.0.10		- MSYS-1.0.10.exe
+
+*)  I suspect that ffcall is actually version 1.10
+    but that the maintainer forgot to update the version
+    number in the ffcall.spec file.
+
+Preparations
+------------
+It is best to let this installer put its files in a fresh, empty
+directory, even when upgrading from a previous version. When you
+install to a directory already containing GNUstep files, problems are
+almost guaranteed. And it is not tested anyway.
+
+The installer doesn't handle an already set GNUSTEP_SYSTEM_ROOT
+environment variable gracefully yet. Is is best to have not set this
+environment variable at all prior to running the installer. The
+installer doesn't mind if it is set to the directory you're going to
+install it in anyway (so installing to x:\GNUstep when
+GNUSTEP_SYSTEM_ROOT=x:\GNUstep\System should work).
+
+Limitations
+-----------
+- No automatic starting of gdomap, gdnc and gpbs yet.
+
+
+Directory layout
+----------------
+
+The installer itself will create the following directory structure and files:
+
+
+<install-dir>			- The root of where everything is installed
+
+<install-dir>\BUGS		- file explaining what to do if you find bugs
+
+<install-dir>\version.txt	- file containing the installed packages and
+				  version information
+
+<install-dir>\Development	- All the source and extra utilities needed to
+				  build the GNUstep base system
+
+<install-dir>\Development\msys	- The MinGW and MSYS installation
+			          from http://www.mingw.org
+
+<install-dir>\Development\uninstall 
+				- directory containing the uninstaller for this 
+				  installer
+
+<install-dir>\Development\Source\base 
+				- the source of the GNUstep base library.
+				  This is the unpacked gnustep-base-*.tar.gz
+				  from http://www.gnustep.org
+
+<install-dir>\Development\Source\make
+				- the source of the GNUstep make package
+				  This is the unpacked gnustep-make-*.tar.gz
+				  from http://www.gnustep.org
+
+<install-dir>\Development\Source\gui
+				- the source of the GNUstep gui package
+				  This is the unpacked gnustep-gui-*.tar.gz
+				  from http://www.gnustep.org
+
+<install-dir>\Development\Source\back
+				- the source of the GNUstep back package
+				  This is the unpacked gnustep-back-*.tar.gz
+				  from http://www.gnustep.org
+
+<install-dir>\Development\Source\libobjc
+				- the source of the GNUstep libobjc package
+				  This is the unpacked gnustep-objc-*.tar.gz
+				  from http://www.gnustep.org
+
+<install-dir>\Development\Source\zlib
+				- the precompiled zlib library 
+				  This is the unpacked zlib-*-lib.zip
+				  plus the unpacked zlib-*-bin.zip
+				  from
+				  http://prdownloads.sourceforge.net/gnuwin32/
+
+<install-dir>\Development\Source\ffcall
+				- the source of the ffcall library
+				  This is the unpacked ffcall-*.tar.gz
+				  from http://www.gnustep.org
+
+<install-dir>\Development\Source\iconv
+				- the precompiled iconv library
+				  This is the unpacked libiconv-*.bin.woe32.zip
+				  from http://www.gnu.org/software/libiconv
+
+<install-dir>\Development\Source\libjpeg
+				- the precompiled libjpeg library 
+				  This is the unpacked
+				  libjpeg-*-lib.zip plus the unpacked
+				  libjpeg-*-bin.zip from
+				  http://prdownloads.sourceforge.net/gnuwin32/
+
+<install-dir>\Development\Source\libpng
+				- the precompiled libpng library 
+				  This is the unpacked
+				  libpng-*-lib.zip plus the unpacked
+				  libpng-*-bin.zip from
+				  http://prdownloads.sourceforge.net/gnuwin32/
+
+<install-dir>\Development\Source\libtiff
+				- the precompiled libtiff library 
+				  This is the unpacked tiff-*-lib.zip
+				  plus the unpacked tiff-*-bin.zip
+				  from
+				  http://prdownloads.sourceforge.net/gnuwin32/
+
+<install-dir>\Development\Source\ExtraDLLs
+				- extra DLL's required by the system 
+				  
+
+
+Regards,
+Tom Koelman <tkoelman@xs4all.nl>
+Wim Oudshoorn <woudshoo@xs4all.nl>

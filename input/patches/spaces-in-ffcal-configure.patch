@@ -1,0 +1,554 @@
+--- ffcall/avcall/configure.org	Wed Mar 17 18:24:48 2004
++++ ffcall/avcall/configure	Tue Mar  8 12:29:27 2005
+@@ -4754,13 +4754,13 @@
+ if test -n "$RANLIB"; then
+   case $host_os in
+   openbsd*)
+-    old_postinstall_cmds="\$RANLIB -t \$oldlib~$old_postinstall_cmds"
++    old_postinstall_cmds="\$RANLIB -t \$oldlib:$old_postinstall_cmds"
+     ;;
+   *)
+-    old_postinstall_cmds="\$RANLIB \$oldlib~$old_postinstall_cmds"
++    old_postinstall_cmds="\$RANLIB \$oldlib:$old_postinstall_cmds"
+     ;;
+   esac
+-  old_archive_cmds="$old_archive_cmds~\$RANLIB \$oldlib"
++  old_archive_cmds="$old_archive_cmds:\$RANLIB \$oldlib"
+ fi
+ 
+ # Allow CC to be a program name with arguments.
+@@ -5408,7 +5408,7 @@
+     ;;
+ 
+   amigaos*)
+-    archive_cmds='$rm $output_objdir/a2ixlibrary.data~$echo "#define NAME $libname" > $output_objdir/a2ixlibrary.data~$echo "#define LIBRARY_ID 1" >> $output_objdir/a2ixlibrary.data~$echo "#define VERSION $major" >> $output_objdir/a2ixlibrary.data~$echo "#define REVISION $revision" >> $output_objdir/a2ixlibrary.data~$AR $AR_FLAGS $lib $libobjs~$RANLIB $lib~(cd $output_objdir && a2ixlibrary -32)'
++    archive_cmds='$rm $output_objdir/a2ixlibrary.data:$echo "#define NAME $libname" > $output_objdir/a2ixlibrary.data:$echo "#define LIBRARY_ID 1" >> $output_objdir/a2ixlibrary.data:$echo "#define VERSION $major" >> $output_objdir/a2ixlibrary.data:$echo "#define REVISION $revision" >> $output_objdir/a2ixlibrary.data:$AR $AR_FLAGS $lib $libobjs:$RANLIB $lib~(cd $output_objdir && a2ixlibrary -32)'
+     hardcode_libdir_flag_spec='-L$libdir'
+     hardcode_minus_L=yes
+ 
+@@ -5583,7 +5583,7 @@
+   aix3*)
+     allow_undefined_flag=unsupported
+     always_export_symbols=yes
+-    archive_expsym_cmds='$LD -o $output_objdir/$soname $libobjs $deplibs $linker_flags -bE:$export_symbols -T512 -H512 -bM:SRE~$AR $AR_FLAGS $lib $output_objdir/$soname'
++    archive_expsym_cmds='$LD -o $output_objdir/$soname $libobjs $deplibs $linker_flags -bE:$export_symbols -T512 -H512 -bM:SRE:$AR $AR_FLAGS $lib $output_objdir/$soname'
+     # Note: this linker hardcodes the directories in LIBPATH if there
+     # are no directories specified by -L.
+     hardcode_minus_L=yes
+@@ -5686,13 +5686,13 @@
+ 	allow_undefined_flag='${wl}-berok'
+ 	# This is a bit strange, but is similar to how AIX traditionally builds
+ 	# it's shared libraries.
+-	archive_expsym_cmds="\$CC $shared_flag"' -o $output_objdir/$soname $libobjs $deplibs $compiler_flags ${allow_undefined_flag} '"\${wl}$no_entry_flag \${wl}$exp_sym_flag:\$export_symbols"' ~$AR -crlo $objdir/$libname$release.a $objdir/$soname'
++	archive_expsym_cmds="\$CC $shared_flag"' -o $output_objdir/$soname $libobjs $deplibs $compiler_flags ${allow_undefined_flag} '"\${wl}$no_entry_flag \${wl}$exp_sym_flag:\$export_symbols"' :$AR -crlo $objdir/$libname$release.a $objdir/$soname'
+       fi
+     fi
+     ;;
+ 
+   amigaos*)
+-    archive_cmds='$rm $output_objdir/a2ixlibrary.data~$echo "#define NAME $libname" > $output_objdir/a2ixlibrary.data~$echo "#define LIBRARY_ID 1" >> $output_objdir/a2ixlibrary.data~$echo "#define VERSION $major" >> $output_objdir/a2ixlibrary.data~$echo "#define REVISION $revision" >> $output_objdir/a2ixlibrary.data~$AR $AR_FLAGS $lib $libobjs~$RANLIB $lib~(cd $output_objdir && a2ixlibrary -32)'
++    archive_cmds='$rm $output_objdir/a2ixlibrary.data:$echo "#define NAME $libname" > $output_objdir/a2ixlibrary.data:$echo "#define LIBRARY_ID 1" >> $output_objdir/a2ixlibrary.data:$echo "#define VERSION $major" >> $output_objdir/a2ixlibrary.data:$echo "#define REVISION $revision" >> $output_objdir/a2ixlibrary.data:$AR $AR_FLAGS $lib $libobjs:$RANLIB $lib~(cd $output_objdir && a2ixlibrary -32)'
+     hardcode_libdir_flag_spec='-L$libdir'
+     hardcode_minus_L=yes
+     # see comment about different semantics on the GNU ld section
+@@ -5771,7 +5771,7 @@
+ 
+   hpux9* | hpux10* | hpux11*)
+     case $host_os in
+-    hpux9*) archive_cmds='$rm $output_objdir/$soname~$LD -b +b $install_libdir -o $output_objdir/$soname $libobjs $deplibs $linker_flags~test $output_objdir/$soname = $lib || mv $output_objdir/$soname $lib' ;;
++    hpux9*) archive_cmds='$rm $output_objdir/$soname:$LD -b +b $install_libdir -o $output_objdir/$soname $libobjs $deplibs $linker_flags~test $output_objdir/$soname = $lib || mv $output_objdir/$soname $lib' ;;
+     *) archive_cmds='$LD -b +h $soname +b $install_libdir -o $lib $libobjs $deplibs $linker_flags' ;;
+     esac
+     hardcode_libdir_flag_spec='${wl}+b ${wl}$libdir'
+@@ -5838,7 +5838,7 @@
+     hardcode_libdir_flag_spec='-L$libdir'
+     hardcode_minus_L=yes
+     allow_undefined_flag=unsupported
+-    archive_cmds='$echo "LIBRARY $libname INITINSTANCE" > $output_objdir/$libname.def~$echo "DESCRIPTION \"$libname\"" >> $output_objdir/$libname.def~$echo DATA >> $output_objdir/$libname.def~$echo " SINGLE NONSHARED" >> $output_objdir/$libname.def~$echo EXPORTS >> $output_objdir/$libname.def~emxexp $libobjs >> $output_objdir/$libname.def~$CC -Zdll -Zcrtdll -o $lib $libobjs $deplibs $compiler_flags $output_objdir/$libname.def'
++    archive_cmds='$echo "LIBRARY $libname INITINSTANCE" > $output_objdir/$libname.def:$echo "DESCRIPTION \"$libname\"" >> $output_objdir/$libname.def:$echo DATA >> $output_objdir/$libname.def:$echo " SINGLE NONSHARED" >> $output_objdir/$libname.def:$echo EXPORTS >> $output_objdir/$libname.def~emxexp $libobjs >> $output_objdir/$libname.def:$CC -Zdll -Zcrtdll -o $lib $libobjs $deplibs $compiler_flags $output_objdir/$libname.def'
+     old_archive_from_new_cmds='emximp -o $output_objdir/$libname.a $output_objdir/$libname.def'
+     ;;
+ 
+@@ -5863,7 +5863,7 @@
+       allow_undefined_flag=' -expect_unresolved \*'
+       archive_cmds='$LD -shared${allow_undefined_flag} $libobjs $deplibs $linker_flags -msym -soname $soname `test -n "$verstring" && echo -set_version $verstring` -update_registry ${output_objdir}/so_locations -o $lib'
+       archive_expsym_cmds='for i in `cat $export_symbols`; do printf "-exported_symbol " >> $lib.exp; echo "\$i" >> $lib.exp; done; echo "-hidden">> $lib.exp~
+-      $LD -shared${allow_undefined_flag} -input $lib.exp $linker_flags $libobjs $deplibs -soname $soname `test -n "$verstring" && echo -set_version $verstring` -update_registry ${objdir}/so_locations -o $lib~$rm $lib.exp'
++      $LD -shared${allow_undefined_flag} -input $lib.exp $linker_flags $libobjs $deplibs -soname $soname `test -n "$verstring" && echo -set_version $verstring` -update_registry ${objdir}/so_locations -o $lib:$rm $lib.exp'
+ 
+       #Both c and cxx compiler support -rpath directly
+       hardcode_libdir_flag_spec='-rpath $libdir'
+@@ -5912,8 +5912,8 @@
+     # $CC -shared without GNU ld will not create a library from C++
+     # object files and a static libstdc++, better avoid it by now
+     archive_cmds='$LD -G${allow_undefined_flag} -h $soname -o $lib $libobjs $deplibs $linker_flags'
+-    archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp~$echo "local: *; };" >> $lib.exp~
+-		$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags~$rm $lib.exp'
++    archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp:$echo "local: *; };" >> $lib.exp~
++		$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags:$rm $lib.exp'
+     hardcode_libdir_flag_spec='-R$libdir'
+     hardcode_shlibpath_var=no
+     case $host_os in
+@@ -5971,8 +5971,8 @@
+     # $CC -shared without GNU ld will not create a library from C++
+     # object files and a static libstdc++, better avoid it by now
+     archive_cmds='$LD -G${allow_undefined_flag} -h $soname -o $lib $libobjs $deplibs $linker_flags'
+-    archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp~$echo "local: *; };" >> $lib.exp~
+-		$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags~$rm $lib.exp'
++    archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp:$echo "local: *; };" >> $lib.exp~
++		$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags:$rm $lib.exp'
+     hardcode_libdir_flag_spec=
+     hardcode_shlibpath_var=no
+     runpath_var='LD_RUN_PATH'
+@@ -6502,7 +6502,7 @@
+ aix3*)
+   test "$enable_shared" = yes && enable_static=no
+   if test -n "$RANLIB"; then
+-    archive_cmds="$archive_cmds~\$RANLIB \$lib"
++    archive_cmds="$archive_cmds:\$RANLIB \$lib"
+     postinstall_cmds='$RANLIB $lib'
+   fi
+   ;;
+--- ffcall/callback/configure.org	Wed Mar 17 18:24:50 2004
++++ ffcall/callback/configure	Tue Mar  8 12:38:24 2005
+@@ -4711,13 +4711,13 @@
+ if test -n "$RANLIB"; then
+   case $host_os in
+   openbsd*)
+-    old_postinstall_cmds="\$RANLIB -t \$oldlib~$old_postinstall_cmds"
++    old_postinstall_cmds="\$RANLIB -t \$oldlib:$old_postinstall_cmds"
+     ;;
+   *)
+-    old_postinstall_cmds="\$RANLIB \$oldlib~$old_postinstall_cmds"
++    old_postinstall_cmds="\$RANLIB \$oldlib:$old_postinstall_cmds"
+     ;;
+   esac
+-  old_archive_cmds="$old_archive_cmds~\$RANLIB \$oldlib"
++  old_archive_cmds="$old_archive_cmds:\$RANLIB \$oldlib"
+ fi
+ 
+ # Allow CC to be a program name with arguments.
+@@ -5365,7 +5365,7 @@
+     ;;
+ 
+   amigaos*)
+-    archive_cmds='$rm $output_objdir/a2ixlibrary.data~$echo "#define NAME $libname" > $output_objdir/a2ixlibrary.data~$echo "#define LIBRARY_ID 1" >> $output_objdir/a2ixlibrary.data~$echo "#define VERSION $major" >> $output_objdir/a2ixlibrary.data~$echo "#define REVISION $revision" >> $output_objdir/a2ixlibrary.data~$AR $AR_FLAGS $lib $libobjs~$RANLIB $lib~(cd $output_objdir && a2ixlibrary -32)'
++    archive_cmds='$rm $output_objdir/a2ixlibrary.data:$echo "#define NAME $libname" > $output_objdir/a2ixlibrary.data:$echo "#define LIBRARY_ID 1" >> $output_objdir/a2ixlibrary.data:$echo "#define VERSION $major" >> $output_objdir/a2ixlibrary.data:$echo "#define REVISION $revision" >> $output_objdir/a2ixlibrary.data:$AR $AR_FLAGS $lib $libobjs:$RANLIB $lib~(cd $output_objdir && a2ixlibrary -32)'
+     hardcode_libdir_flag_spec='-L$libdir'
+     hardcode_minus_L=yes
+ 
+@@ -5540,7 +5540,7 @@
+   aix3*)
+     allow_undefined_flag=unsupported
+     always_export_symbols=yes
+-    archive_expsym_cmds='$LD -o $output_objdir/$soname $libobjs $deplibs $linker_flags -bE:$export_symbols -T512 -H512 -bM:SRE~$AR $AR_FLAGS $lib $output_objdir/$soname'
++    archive_expsym_cmds='$LD -o $output_objdir/$soname $libobjs $deplibs $linker_flags -bE:$export_symbols -T512 -H512 -bM:SRE:$AR $AR_FLAGS $lib $output_objdir/$soname'
+     # Note: this linker hardcodes the directories in LIBPATH if there
+     # are no directories specified by -L.
+     hardcode_minus_L=yes
+@@ -5643,13 +5643,13 @@
+ 	allow_undefined_flag='${wl}-berok'
+ 	# This is a bit strange, but is similar to how AIX traditionally builds
+ 	# it's shared libraries.
+-	archive_expsym_cmds="\$CC $shared_flag"' -o $output_objdir/$soname $libobjs $deplibs $compiler_flags ${allow_undefined_flag} '"\${wl}$no_entry_flag \${wl}$exp_sym_flag:\$export_symbols"' ~$AR -crlo $objdir/$libname$release.a $objdir/$soname'
++	archive_expsym_cmds="\$CC $shared_flag"' -o $output_objdir/$soname $libobjs $deplibs $compiler_flags ${allow_undefined_flag} '"\${wl}$no_entry_flag \${wl}$exp_sym_flag:\$export_symbols"' :$AR -crlo $objdir/$libname$release.a $objdir/$soname'
+       fi
+     fi
+     ;;
+ 
+   amigaos*)
+-    archive_cmds='$rm $output_objdir/a2ixlibrary.data~$echo "#define NAME $libname" > $output_objdir/a2ixlibrary.data~$echo "#define LIBRARY_ID 1" >> $output_objdir/a2ixlibrary.data~$echo "#define VERSION $major" >> $output_objdir/a2ixlibrary.data~$echo "#define REVISION $revision" >> $output_objdir/a2ixlibrary.data~$AR $AR_FLAGS $lib $libobjs~$RANLIB $lib~(cd $output_objdir && a2ixlibrary -32)'
++    archive_cmds='$rm $output_objdir/a2ixlibrary.data:$echo "#define NAME $libname" > $output_objdir/a2ixlibrary.data:$echo "#define LIBRARY_ID 1" >> $output_objdir/a2ixlibrary.data:$echo "#define VERSION $major" >> $output_objdir/a2ixlibrary.data:$echo "#define REVISION $revision" >> $output_objdir/a2ixlibrary.data:$AR $AR_FLAGS $lib $libobjs:$RANLIB $lib~(cd $output_objdir && a2ixlibrary -32)'
+     hardcode_libdir_flag_spec='-L$libdir'
+     hardcode_minus_L=yes
+     # see comment about different semantics on the GNU ld section
+@@ -5728,7 +5728,7 @@
+ 
+   hpux9* | hpux10* | hpux11*)
+     case $host_os in
+-    hpux9*) archive_cmds='$rm $output_objdir/$soname~$LD -b +b $install_libdir -o $output_objdir/$soname $libobjs $deplibs $linker_flags~test $output_objdir/$soname = $lib || mv $output_objdir/$soname $lib' ;;
++    hpux9*) archive_cmds='$rm $output_objdir/$soname:$LD -b +b $install_libdir -o $output_objdir/$soname $libobjs $deplibs $linker_flags~test $output_objdir/$soname = $lib || mv $output_objdir/$soname $lib' ;;
+     *) archive_cmds='$LD -b +h $soname +b $install_libdir -o $lib $libobjs $deplibs $linker_flags' ;;
+     esac
+     hardcode_libdir_flag_spec='${wl}+b ${wl}$libdir'
+@@ -5795,7 +5795,7 @@
+     hardcode_libdir_flag_spec='-L$libdir'
+     hardcode_minus_L=yes
+     allow_undefined_flag=unsupported
+-    archive_cmds='$echo "LIBRARY $libname INITINSTANCE" > $output_objdir/$libname.def~$echo "DESCRIPTION \"$libname\"" >> $output_objdir/$libname.def~$echo DATA >> $output_objdir/$libname.def~$echo " SINGLE NONSHARED" >> $output_objdir/$libname.def~$echo EXPORTS >> $output_objdir/$libname.def~emxexp $libobjs >> $output_objdir/$libname.def~$CC -Zdll -Zcrtdll -o $lib $libobjs $deplibs $compiler_flags $output_objdir/$libname.def'
++    archive_cmds='$echo "LIBRARY $libname INITINSTANCE" > $output_objdir/$libname.def:$echo "DESCRIPTION \"$libname\"" >> $output_objdir/$libname.def:$echo DATA >> $output_objdir/$libname.def:$echo " SINGLE NONSHARED" >> $output_objdir/$libname.def:$echo EXPORTS >> $output_objdir/$libname.def~emxexp $libobjs >> $output_objdir/$libname.def:$CC -Zdll -Zcrtdll -o $lib $libobjs $deplibs $compiler_flags $output_objdir/$libname.def'
+     old_archive_from_new_cmds='emximp -o $output_objdir/$libname.a $output_objdir/$libname.def'
+     ;;
+ 
+@@ -5820,7 +5820,7 @@
+       allow_undefined_flag=' -expect_unresolved \*'
+       archive_cmds='$LD -shared${allow_undefined_flag} $libobjs $deplibs $linker_flags -msym -soname $soname `test -n "$verstring" && echo -set_version $verstring` -update_registry ${output_objdir}/so_locations -o $lib'
+       archive_expsym_cmds='for i in `cat $export_symbols`; do printf "-exported_symbol " >> $lib.exp; echo "\$i" >> $lib.exp; done; echo "-hidden">> $lib.exp~
+-      $LD -shared${allow_undefined_flag} -input $lib.exp $linker_flags $libobjs $deplibs -soname $soname `test -n "$verstring" && echo -set_version $verstring` -update_registry ${objdir}/so_locations -o $lib~$rm $lib.exp'
++      $LD -shared${allow_undefined_flag} -input $lib.exp $linker_flags $libobjs $deplibs -soname $soname `test -n "$verstring" && echo -set_version $verstring` -update_registry ${objdir}/so_locations -o $lib:$rm $lib.exp'
+ 
+       #Both c and cxx compiler support -rpath directly
+       hardcode_libdir_flag_spec='-rpath $libdir'
+@@ -5869,8 +5869,8 @@
+     # $CC -shared without GNU ld will not create a library from C++
+     # object files and a static libstdc++, better avoid it by now
+     archive_cmds='$LD -G${allow_undefined_flag} -h $soname -o $lib $libobjs $deplibs $linker_flags'
+-    archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp~$echo "local: *; };" >> $lib.exp~
+-		$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags~$rm $lib.exp'
++    archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp:$echo "local: *; };" >> $lib.exp~
++		$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags:$rm $lib.exp'
+     hardcode_libdir_flag_spec='-R$libdir'
+     hardcode_shlibpath_var=no
+     case $host_os in
+@@ -5928,8 +5928,8 @@
+     # $CC -shared without GNU ld will not create a library from C++
+     # object files and a static libstdc++, better avoid it by now
+     archive_cmds='$LD -G${allow_undefined_flag} -h $soname -o $lib $libobjs $deplibs $linker_flags'
+-    archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp~$echo "local: *; };" >> $lib.exp~
+-		$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags~$rm $lib.exp'
++    archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp:$echo "local: *; };" >> $lib.exp~
++		$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags:$rm $lib.exp'
+     hardcode_libdir_flag_spec=
+     hardcode_shlibpath_var=no
+     runpath_var='LD_RUN_PATH'
+@@ -6459,7 +6459,7 @@
+ aix3*)
+   test "$enable_shared" = yes && enable_static=no
+   if test -n "$RANLIB"; then
+-    archive_cmds="$archive_cmds~\$RANLIB \$lib"
++    archive_cmds="$archive_cmds:\$RANLIB \$lib"
+     postinstall_cmds='$RANLIB $lib'
+   fi
+   ;;
+--- ffcall/callback/trampoline_r/configure.org	Wed Mar 17 18:24:50 2004
++++ ffcall/callback/trampoline_r/configure	Tue Mar  8 14:27:03 2005
+@@ -4754,13 +4754,13 @@
+ if test -n "$RANLIB"; then
+   case $host_os in
+   openbsd*)
+-    old_postinstall_cmds="\$RANLIB -t \$oldlib~$old_postinstall_cmds"
++    old_postinstall_cmds="\$RANLIB -t \$oldlib:$old_postinstall_cmds"
+     ;;
+   *)
+-    old_postinstall_cmds="\$RANLIB \$oldlib~$old_postinstall_cmds"
++    old_postinstall_cmds="\$RANLIB \$oldlib:$old_postinstall_cmds"
+     ;;
+   esac
+-  old_archive_cmds="$old_archive_cmds~\$RANLIB \$oldlib"
++  old_archive_cmds="$old_archive_cmds:\$RANLIB \$oldlib"
+ fi
+ 
+ # Allow CC to be a program name with arguments.
+@@ -5408,7 +5408,7 @@
+     ;;
+ 
+   amigaos*)
+-    archive_cmds='$rm $output_objdir/a2ixlibrary.data~$echo "#define NAME $libname" > $output_objdir/a2ixlibrary.data~$echo "#define LIBRARY_ID 1" >> $output_objdir/a2ixlibrary.data~$echo "#define VERSION $major" >> $output_objdir/a2ixlibrary.data~$echo "#define REVISION $revision" >> $output_objdir/a2ixlibrary.data~$AR $AR_FLAGS $lib $libobjs~$RANLIB $lib~(cd $output_objdir && a2ixlibrary -32)'
++    archive_cmds='$rm $output_objdir/a2ixlibrary.data:$echo "#define NAME $libname" > $output_objdir/a2ixlibrary.data:$echo "#define LIBRARY_ID 1" >> $output_objdir/a2ixlibrary.data:$echo "#define VERSION $major" >> $output_objdir/a2ixlibrary.data:$echo "#define REVISION $revision" >> $output_objdir/a2ixlibrary.data:$AR $AR_FLAGS $lib $libobjs:$RANLIB $lib~(cd $output_objdir && a2ixlibrary -32)'
+     hardcode_libdir_flag_spec='-L$libdir'
+     hardcode_minus_L=yes
+ 
+@@ -5583,7 +5583,7 @@
+   aix3*)
+     allow_undefined_flag=unsupported
+     always_export_symbols=yes
+-    archive_expsym_cmds='$LD -o $output_objdir/$soname $libobjs $deplibs $linker_flags -bE:$export_symbols -T512 -H512 -bM:SRE~$AR $AR_FLAGS $lib $output_objdir/$soname'
++    archive_expsym_cmds='$LD -o $output_objdir/$soname $libobjs $deplibs $linker_flags -bE:$export_symbols -T512 -H512 -bM:SRE:$AR $AR_FLAGS $lib $output_objdir/$soname'
+     # Note: this linker hardcodes the directories in LIBPATH if there
+     # are no directories specified by -L.
+     hardcode_minus_L=yes
+@@ -5686,13 +5686,13 @@
+ 	allow_undefined_flag='${wl}-berok'
+ 	# This is a bit strange, but is similar to how AIX traditionally builds
+ 	# it's shared libraries.
+-	archive_expsym_cmds="\$CC $shared_flag"' -o $output_objdir/$soname $libobjs $deplibs $compiler_flags ${allow_undefined_flag} '"\${wl}$no_entry_flag \${wl}$exp_sym_flag:\$export_symbols"' ~$AR -crlo $objdir/$libname$release.a $objdir/$soname'
++	archive_expsym_cmds="\$CC $shared_flag"' -o $output_objdir/$soname $libobjs $deplibs $compiler_flags ${allow_undefined_flag} '"\${wl}$no_entry_flag \${wl}$exp_sym_flag:\$export_symbols"' :$AR -crlo $objdir/$libname$release.a $objdir/$soname'
+       fi
+     fi
+     ;;
+ 
+   amigaos*)
+-    archive_cmds='$rm $output_objdir/a2ixlibrary.data~$echo "#define NAME $libname" > $output_objdir/a2ixlibrary.data~$echo "#define LIBRARY_ID 1" >> $output_objdir/a2ixlibrary.data~$echo "#define VERSION $major" >> $output_objdir/a2ixlibrary.data~$echo "#define REVISION $revision" >> $output_objdir/a2ixlibrary.data~$AR $AR_FLAGS $lib $libobjs~$RANLIB $lib~(cd $output_objdir && a2ixlibrary -32)'
++    archive_cmds='$rm $output_objdir/a2ixlibrary.data:$echo "#define NAME $libname" > $output_objdir/a2ixlibrary.data:$echo "#define LIBRARY_ID 1" >> $output_objdir/a2ixlibrary.data:$echo "#define VERSION $major" >> $output_objdir/a2ixlibrary.data:$echo "#define REVISION $revision" >> $output_objdir/a2ixlibrary.data:$AR $AR_FLAGS $lib $libobjs:$RANLIB $lib~(cd $output_objdir && a2ixlibrary -32)'
+     hardcode_libdir_flag_spec='-L$libdir'
+     hardcode_minus_L=yes
+     # see comment about different semantics on the GNU ld section
+@@ -5771,7 +5771,7 @@
+ 
+   hpux9* | hpux10* | hpux11*)
+     case $host_os in
+-    hpux9*) archive_cmds='$rm $output_objdir/$soname~$LD -b +b $install_libdir -o $output_objdir/$soname $libobjs $deplibs $linker_flags~test $output_objdir/$soname = $lib || mv $output_objdir/$soname $lib' ;;
++    hpux9*) archive_cmds='$rm $output_objdir/$soname:$LD -b +b $install_libdir -o $output_objdir/$soname $libobjs $deplibs $linker_flags~test $output_objdir/$soname = $lib || mv $output_objdir/$soname $lib' ;;
+     *) archive_cmds='$LD -b +h $soname +b $install_libdir -o $lib $libobjs $deplibs $linker_flags' ;;
+     esac
+     hardcode_libdir_flag_spec='${wl}+b ${wl}$libdir'
+@@ -5838,7 +5838,7 @@
+     hardcode_libdir_flag_spec='-L$libdir'
+     hardcode_minus_L=yes
+     allow_undefined_flag=unsupported
+-    archive_cmds='$echo "LIBRARY $libname INITINSTANCE" > $output_objdir/$libname.def~$echo "DESCRIPTION \"$libname\"" >> $output_objdir/$libname.def~$echo DATA >> $output_objdir/$libname.def~$echo " SINGLE NONSHARED" >> $output_objdir/$libname.def~$echo EXPORTS >> $output_objdir/$libname.def~emxexp $libobjs >> $output_objdir/$libname.def~$CC -Zdll -Zcrtdll -o $lib $libobjs $deplibs $compiler_flags $output_objdir/$libname.def'
++    archive_cmds='$echo "LIBRARY $libname INITINSTANCE" > $output_objdir/$libname.def:$echo "DESCRIPTION \"$libname\"" >> $output_objdir/$libname.def:$echo DATA >> $output_objdir/$libname.def:$echo " SINGLE NONSHARED" >> $output_objdir/$libname.def:$echo EXPORTS >> $output_objdir/$libname.def~emxexp $libobjs >> $output_objdir/$libname.def:$CC -Zdll -Zcrtdll -o $lib $libobjs $deplibs $compiler_flags $output_objdir/$libname.def'
+     old_archive_from_new_cmds='emximp -o $output_objdir/$libname.a $output_objdir/$libname.def'
+     ;;
+ 
+@@ -5863,7 +5863,7 @@
+       allow_undefined_flag=' -expect_unresolved \*'
+       archive_cmds='$LD -shared${allow_undefined_flag} $libobjs $deplibs $linker_flags -msym -soname $soname `test -n "$verstring" && echo -set_version $verstring` -update_registry ${output_objdir}/so_locations -o $lib'
+       archive_expsym_cmds='for i in `cat $export_symbols`; do printf "-exported_symbol " >> $lib.exp; echo "\$i" >> $lib.exp; done; echo "-hidden">> $lib.exp~
+-      $LD -shared${allow_undefined_flag} -input $lib.exp $linker_flags $libobjs $deplibs -soname $soname `test -n "$verstring" && echo -set_version $verstring` -update_registry ${objdir}/so_locations -o $lib~$rm $lib.exp'
++      $LD -shared${allow_undefined_flag} -input $lib.exp $linker_flags $libobjs $deplibs -soname $soname `test -n "$verstring" && echo -set_version $verstring` -update_registry ${objdir}/so_locations -o $lib:$rm $lib.exp'
+ 
+       #Both c and cxx compiler support -rpath directly
+       hardcode_libdir_flag_spec='-rpath $libdir'
+@@ -5912,8 +5912,8 @@
+     # $CC -shared without GNU ld will not create a library from C++
+     # object files and a static libstdc++, better avoid it by now
+     archive_cmds='$LD -G${allow_undefined_flag} -h $soname -o $lib $libobjs $deplibs $linker_flags'
+-    archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp~$echo "local: *; };" >> $lib.exp~
+-		$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags~$rm $lib.exp'
++    archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp:$echo "local: *; };" >> $lib.exp~
++		$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags:$rm $lib.exp'
+     hardcode_libdir_flag_spec='-R$libdir'
+     hardcode_shlibpath_var=no
+     case $host_os in
+@@ -5971,8 +5971,8 @@
+     # $CC -shared without GNU ld will not create a library from C++
+     # object files and a static libstdc++, better avoid it by now
+     archive_cmds='$LD -G${allow_undefined_flag} -h $soname -o $lib $libobjs $deplibs $linker_flags'
+-    archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp~$echo "local: *; };" >> $lib.exp~
+-		$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags~$rm $lib.exp'
++    archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp:$echo "local: *; };" >> $lib.exp~
++		$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags:$rm $lib.exp'
+     hardcode_libdir_flag_spec=
+     hardcode_shlibpath_var=no
+     runpath_var='LD_RUN_PATH'
+@@ -6502,7 +6502,7 @@
+ aix3*)
+   test "$enable_shared" = yes && enable_static=no
+   if test -n "$RANLIB"; then
+-    archive_cmds="$archive_cmds~\$RANLIB \$lib"
++    archive_cmds="$archive_cmds:\$RANLIB \$lib"
+     postinstall_cmds='$RANLIB $lib'
+   fi
+   ;;
+--- ffcall/callback/vacall_r/configure.org	Wed Mar 17 18:24:52 2004
++++ ffcall/callback/vacall_r/configure	Tue Mar  8 14:25:16 2005
+@@ -4754,13 +4754,13 @@
+ if test -n "$RANLIB"; then
+   case $host_os in
+   openbsd*)
+-    old_postinstall_cmds="\$RANLIB -t \$oldlib~$old_postinstall_cmds"
++    old_postinstall_cmds="\$RANLIB -t \$oldlib:$old_postinstall_cmds"
+     ;;
+   *)
+-    old_postinstall_cmds="\$RANLIB \$oldlib~$old_postinstall_cmds"
++    old_postinstall_cmds="\$RANLIB \$oldlib:$old_postinstall_cmds"
+     ;;
+   esac
+-  old_archive_cmds="$old_archive_cmds~\$RANLIB \$oldlib"
++  old_archive_cmds="$old_archive_cmds:\$RANLIB \$oldlib"
+ fi
+ 
+ # Allow CC to be a program name with arguments.
+@@ -5408,7 +5408,7 @@
+     ;;
+ 
+   amigaos*)
+-    archive_cmds='$rm $output_objdir/a2ixlibrary.data~$echo "#define NAME $libname" > $output_objdir/a2ixlibrary.data~$echo "#define LIBRARY_ID 1" >> $output_objdir/a2ixlibrary.data~$echo "#define VERSION $major" >> $output_objdir/a2ixlibrary.data~$echo "#define REVISION $revision" >> $output_objdir/a2ixlibrary.data~$AR $AR_FLAGS $lib $libobjs~$RANLIB $lib~(cd $output_objdir && a2ixlibrary -32)'
++    archive_cmds='$rm $output_objdir/a2ixlibrary.data:$echo "#define NAME $libname" > $output_objdir/a2ixlibrary.data:$echo "#define LIBRARY_ID 1" >> $output_objdir/a2ixlibrary.data:$echo "#define VERSION $major" >> $output_objdir/a2ixlibrary.data:$echo "#define REVISION $revision" >> $output_objdir/a2ixlibrary.data:$AR $AR_FLAGS $lib $libobjs:$RANLIB $lib~(cd $output_objdir && a2ixlibrary -32)'
+     hardcode_libdir_flag_spec='-L$libdir'
+     hardcode_minus_L=yes
+ 
+@@ -5583,7 +5583,7 @@
+   aix3*)
+     allow_undefined_flag=unsupported
+     always_export_symbols=yes
+-    archive_expsym_cmds='$LD -o $output_objdir/$soname $libobjs $deplibs $linker_flags -bE:$export_symbols -T512 -H512 -bM:SRE~$AR $AR_FLAGS $lib $output_objdir/$soname'
++    archive_expsym_cmds='$LD -o $output_objdir/$soname $libobjs $deplibs $linker_flags -bE:$export_symbols -T512 -H512 -bM:SRE:$AR $AR_FLAGS $lib $output_objdir/$soname'
+     # Note: this linker hardcodes the directories in LIBPATH if there
+     # are no directories specified by -L.
+     hardcode_minus_L=yes
+@@ -5686,13 +5686,13 @@
+ 	allow_undefined_flag='${wl}-berok'
+ 	# This is a bit strange, but is similar to how AIX traditionally builds
+ 	# it's shared libraries.
+-	archive_expsym_cmds="\$CC $shared_flag"' -o $output_objdir/$soname $libobjs $deplibs $compiler_flags ${allow_undefined_flag} '"\${wl}$no_entry_flag \${wl}$exp_sym_flag:\$export_symbols"' ~$AR -crlo $objdir/$libname$release.a $objdir/$soname'
++	archive_expsym_cmds="\$CC $shared_flag"' -o $output_objdir/$soname $libobjs $deplibs $compiler_flags ${allow_undefined_flag} '"\${wl}$no_entry_flag \${wl}$exp_sym_flag:\$export_symbols"' :$AR -crlo $objdir/$libname$release.a $objdir/$soname'
+       fi
+     fi
+     ;;
+ 
+   amigaos*)
+-    archive_cmds='$rm $output_objdir/a2ixlibrary.data~$echo "#define NAME $libname" > $output_objdir/a2ixlibrary.data~$echo "#define LIBRARY_ID 1" >> $output_objdir/a2ixlibrary.data~$echo "#define VERSION $major" >> $output_objdir/a2ixlibrary.data~$echo "#define REVISION $revision" >> $output_objdir/a2ixlibrary.data~$AR $AR_FLAGS $lib $libobjs~$RANLIB $lib~(cd $output_objdir && a2ixlibrary -32)'
++    archive_cmds='$rm $output_objdir/a2ixlibrary.data:$echo "#define NAME $libname" > $output_objdir/a2ixlibrary.data:$echo "#define LIBRARY_ID 1" >> $output_objdir/a2ixlibrary.data:$echo "#define VERSION $major" >> $output_objdir/a2ixlibrary.data:$echo "#define REVISION $revision" >> $output_objdir/a2ixlibrary.data:$AR $AR_FLAGS $lib $libobjs:$RANLIB $lib~(cd $output_objdir && a2ixlibrary -32)'
+     hardcode_libdir_flag_spec='-L$libdir'
+     hardcode_minus_L=yes
+     # see comment about different semantics on the GNU ld section
+@@ -5771,7 +5771,7 @@
+ 
+   hpux9* | hpux10* | hpux11*)
+     case $host_os in
+-    hpux9*) archive_cmds='$rm $output_objdir/$soname~$LD -b +b $install_libdir -o $output_objdir/$soname $libobjs $deplibs $linker_flags~test $output_objdir/$soname = $lib || mv $output_objdir/$soname $lib' ;;
++    hpux9*) archive_cmds='$rm $output_objdir/$soname:$LD -b +b $install_libdir -o $output_objdir/$soname $libobjs $deplibs $linker_flags~test $output_objdir/$soname = $lib || mv $output_objdir/$soname $lib' ;;
+     *) archive_cmds='$LD -b +h $soname +b $install_libdir -o $lib $libobjs $deplibs $linker_flags' ;;
+     esac
+     hardcode_libdir_flag_spec='${wl}+b ${wl}$libdir'
+@@ -5838,7 +5838,7 @@
+     hardcode_libdir_flag_spec='-L$libdir'
+     hardcode_minus_L=yes
+     allow_undefined_flag=unsupported
+-    archive_cmds='$echo "LIBRARY $libname INITINSTANCE" > $output_objdir/$libname.def~$echo "DESCRIPTION \"$libname\"" >> $output_objdir/$libname.def~$echo DATA >> $output_objdir/$libname.def~$echo " SINGLE NONSHARED" >> $output_objdir/$libname.def~$echo EXPORTS >> $output_objdir/$libname.def~emxexp $libobjs >> $output_objdir/$libname.def~$CC -Zdll -Zcrtdll -o $lib $libobjs $deplibs $compiler_flags $output_objdir/$libname.def'
++    archive_cmds='$echo "LIBRARY $libname INITINSTANCE" > $output_objdir/$libname.def:$echo "DESCRIPTION \"$libname\"" >> $output_objdir/$libname.def:$echo DATA >> $output_objdir/$libname.def:$echo " SINGLE NONSHARED" >> $output_objdir/$libname.def:$echo EXPORTS >> $output_objdir/$libname.def~emxexp $libobjs >> $output_objdir/$libname.def:$CC -Zdll -Zcrtdll -o $lib $libobjs $deplibs $compiler_flags $output_objdir/$libname.def'
+     old_archive_from_new_cmds='emximp -o $output_objdir/$libname.a $output_objdir/$libname.def'
+     ;;
+ 
+@@ -5863,7 +5863,7 @@
+       allow_undefined_flag=' -expect_unresolved \*'
+       archive_cmds='$LD -shared${allow_undefined_flag} $libobjs $deplibs $linker_flags -msym -soname $soname `test -n "$verstring" && echo -set_version $verstring` -update_registry ${output_objdir}/so_locations -o $lib'
+       archive_expsym_cmds='for i in `cat $export_symbols`; do printf "-exported_symbol " >> $lib.exp; echo "\$i" >> $lib.exp; done; echo "-hidden">> $lib.exp~
+-      $LD -shared${allow_undefined_flag} -input $lib.exp $linker_flags $libobjs $deplibs -soname $soname `test -n "$verstring" && echo -set_version $verstring` -update_registry ${objdir}/so_locations -o $lib~$rm $lib.exp'
++      $LD -shared${allow_undefined_flag} -input $lib.exp $linker_flags $libobjs $deplibs -soname $soname `test -n "$verstring" && echo -set_version $verstring` -update_registry ${objdir}/so_locations -o $lib:$rm $lib.exp'
+ 
+       #Both c and cxx compiler support -rpath directly
+       hardcode_libdir_flag_spec='-rpath $libdir'
+@@ -5912,8 +5912,8 @@
+     # $CC -shared without GNU ld will not create a library from C++
+     # object files and a static libstdc++, better avoid it by now
+     archive_cmds='$LD -G${allow_undefined_flag} -h $soname -o $lib $libobjs $deplibs $linker_flags'
+-    archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp~$echo "local: *; };" >> $lib.exp~
+-		$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags~$rm $lib.exp'
++    archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp:$echo "local: *; };" >> $lib.exp~
++		$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags:$rm $lib.exp'
+     hardcode_libdir_flag_spec='-R$libdir'
+     hardcode_shlibpath_var=no
+     case $host_os in
+@@ -5971,8 +5971,8 @@
+     # $CC -shared without GNU ld will not create a library from C++
+     # object files and a static libstdc++, better avoid it by now
+     archive_cmds='$LD -G${allow_undefined_flag} -h $soname -o $lib $libobjs $deplibs $linker_flags'
+-    archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp~$echo "local: *; };" >> $lib.exp~
+-		$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags~$rm $lib.exp'
++    archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp:$echo "local: *; };" >> $lib.exp~
++		$LD -G${allow_undefined_flag} -M $lib.exp -h $soname -o $lib $libobjs $deplibs $linker_flags:$rm $lib.exp'
+     hardcode_libdir_flag_spec=
+     hardcode_shlibpath_var=no
+     runpath_var='LD_RUN_PATH'
+@@ -6502,7 +6502,7 @@
+ aix3*)
+   test "$enable_shared" = yes && enable_static=no
+   if test -n "$RANLIB"; then
+-    archive_cmds="$archive_cmds~\$RANLIB \$lib"
++    archive_cmds="$archive_cmds:\$RANLIB \$lib"
+     postinstall_cmds='$RANLIB $lib'
+   fi
+   ;;
+--- ffcall/autoconf/ltmain.sh.org	Wed Apr 25 01:35:10 2001
++++ ffcall/autoconf/ltmain.sh	Tue Mar  8 11:19:00 2005
+@@ -1750,7 +1750,7 @@
+ 	    if test -f "$output_objdir/$soname-def"; then :
+ 	    else
+ 	      $show "extracting exported symbol list from \`$soname'"
+-	      IFS="${IFS= 	}"; save_ifs="$IFS"; IFS='~'
++	      IFS="${IFS= 	}"; save_ifs="$IFS"; IFS=':'
+ 	      eval cmds=\"$extract_expsyms_cmds\"
+ 	      for cmd in $cmds; do
+ 		IFS="$save_ifs"
+@@ -1763,7 +1763,7 @@
+ 	    # Create $newlib
+ 	    if test -f "$output_objdir/$newlib"; then :; else
+ 	      $show "generating import library for \`$soname'"
+-	      IFS="${IFS= 	}"; save_ifs="$IFS"; IFS='~'
++	      IFS="${IFS= 	}"; save_ifs="$IFS"; IFS=':'
+ 	      eval cmds=\"$old_archive_from_expsyms_cmds\"
+ 	      for cmd in $cmds; do
+ 		IFS="$save_ifs"
+@@ -2784,7 +2784,7 @@
+ 	    export_symbols="$output_objdir/$libname.exp"
+ 	    $run $rm $export_symbols
+ 	    eval cmds=\"$export_symbols_cmds\"
+-	    IFS="${IFS= 	}"; save_ifs="$IFS"; IFS='~'
++	    IFS="${IFS= 	}"; save_ifs="$IFS"; IFS=':'
+ 	    for cmd in $cmds; do
+ 	      IFS="$save_ifs"
+ 	      $show "$cmd"
+@@ -2860,7 +2860,7 @@
+ 	else
+ 	  eval cmds=\"$archive_cmds\"
+ 	fi
+-	IFS="${IFS= 	}"; save_ifs="$IFS"; IFS='~'
++	IFS="${IFS= 	}"; save_ifs="$IFS"; IFS=':'
+ 	for cmd in $cmds; do
+ 	  IFS="$save_ifs"
+ 	  $show "$cmd"
+@@ -2988,7 +2988,7 @@
+ 
+       output="$obj"
+       eval cmds=\"$reload_cmds\"
+-      IFS="${IFS= 	}"; save_ifs="$IFS"; IFS='~'
++      IFS="${IFS= 	}"; save_ifs="$IFS"; IFS=':'
+       for cmd in $cmds; do
+ 	IFS="$save_ifs"
+ 	$show "$cmd"
+@@ -3024,7 +3024,7 @@
+ 	reload_objs="$libobjs $reload_conv_objs"
+ 	output="$libobj"
+ 	eval cmds=\"$reload_cmds\"
+-	IFS="${IFS= 	}"; save_ifs="$IFS"; IFS='~'
++	IFS="${IFS= 	}"; save_ifs="$IFS"; IFS=':'
+ 	for cmd in $cmds; do
+ 	  IFS="$save_ifs"
+ 	  $show "$cmd"
+@@ -3790,7 +3790,7 @@
+ 
+ 	eval cmds=\"$old_archive_cmds\"
+       fi
+-      IFS="${IFS= 	}"; save_ifs="$IFS"; IFS='~'
++      IFS="${IFS= 	}"; save_ifs="$IFS"; IFS=':'
+       for cmd in $cmds; do
+ 	IFS="$save_ifs"
+ 	$show "$cmd"
+@@ -4165,7 +4165,7 @@
+ 	  # Do each command in the postinstall commands.
+ 	  lib="$destdir/$realname"
+ 	  eval cmds=\"$postinstall_cmds\"
+-	  IFS="${IFS= 	}"; save_ifs="$IFS"; IFS='~'
++	  IFS="${IFS= 	}"; save_ifs="$IFS"; IFS=':'
+ 	  for cmd in $cmds; do
+ 	    IFS="$save_ifs"
+ 	    $show "$cmd"
+@@ -4352,7 +4352,7 @@
+ 
+       # Do each command in the postinstall commands.
+       eval cmds=\"$old_postinstall_cmds\"
+-      IFS="${IFS= 	}"; save_ifs="$IFS"; IFS='~'
++      IFS="${IFS= 	}"; save_ifs="$IFS"; IFS=':'
+       for cmd in $cmds; do
+ 	IFS="$save_ifs"
+ 	$show "$cmd"
+@@ -4391,7 +4391,7 @@
+ 	if test -n "$finish_cmds"; then
+ 	  # Do each command in the finish commands.
+ 	  eval cmds=\"$finish_cmds\"
+-	  IFS="${IFS= 	}"; save_ifs="$IFS"; IFS='~'
++	  IFS="${IFS= 	}"; save_ifs="$IFS"; IFS=':'
+ 	  for cmd in $cmds; do
+ 	    IFS="$save_ifs"
+ 	    $show "$cmd"
+@@ -4670,7 +4670,7 @@
+ 	    if test -n "$library_names"; then
+ 	      # Do each command in the postuninstall commands.
+ 	      eval cmds=\"$postuninstall_cmds\"
+-	      IFS="${IFS= 	}"; save_ifs="$IFS"; IFS='~'
++	      IFS="${IFS= 	}"; save_ifs="$IFS"; IFS=':'
+ 	      for cmd in $cmds; do
+ 		IFS="$save_ifs"
+ 		$show "$cmd"
+@@ -4685,7 +4685,7 @@
+ 	    if test -n "$old_library"; then
+ 	      # Do each command in the old_postuninstall commands.
+ 	      eval cmds=\"$old_postuninstall_cmds\"
+-	      IFS="${IFS= 	}"; save_ifs="$IFS"; IFS='~'
++	      IFS="${IFS= 	}"; save_ifs="$IFS"; IFS=':'
+ 	      for cmd in $cmds; do
+ 		IFS="$save_ifs"
+ 		$show "$cmd"

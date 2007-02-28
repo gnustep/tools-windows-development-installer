@@ -1,0 +1,64 @@
+*** base/Source/win32/NSMessagePortWin32.m	Thu Jul  6 13:55:13 2006
+--- base/Source/win32/NSMessagePortWin32.m	Tue Sep  5 15:30:33 2006
+***************
+*** 195,214 ****
+  
+  + (id) newWithName: (NSString*)name
+  {
+!   NSMessagePort	*p;
+! 
+!   M_LOCK(messagePortLock);
+!   p = RETAIN((NSMessagePort*)NSMapGet(ports, (void*)name));
+!   if (p == nil)
+!     {
+!       p = [[self alloc] initWithName: name];
+!     }
+!   else
+!     {
+!       [p _setupSendPort];
+!     }
+!   M_UNLOCK(messagePortLock);
+!   return p;
+  }
+  
+  - (void) addConnection: (NSConnection*)aConnection
+--- 195,201 ----
+  
+  + (id) newWithName: (NSString*)name
+  {
+!     return [[self alloc] initWithName: name];
+  }
+  
+  - (void) addConnection: (NSConnection*)aConnection
+***************
+*** 393,406 ****
+  	  NSMapInsert(ports, (void*)this->name, (void*)self);
+  	  NSDebugMLLog(@"NSMessagePort", @"Created speaking port: %@", self);
+  	}
+      }
+    else
+      {
+        RELEASE(self);
+        [p _setupSendPort];
+        self = p;
+      }
+-   M_UNLOCK(messagePortLock);
+    return self;
+  }
+  
+--- 380,394 ----
+  	  NSMapInsert(ports, (void*)this->name, (void*)self);
+  	  NSDebugMLLog(@"NSMessagePort", @"Created speaking port: %@", self);
+  	}
++       M_UNLOCK(messagePortLock);
+      }
+    else
+      {
+        RELEASE(self);
++       M_UNLOCK(messagePortLock);
+        [p _setupSendPort];
+        self = p;
+      }
+    return self;
+  }
+  

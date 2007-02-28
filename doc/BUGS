@@ -1,0 +1,10 @@
+When you think you encountered a bug in the installer, typically the
+case when a dialog popped up referring you to this file, you can take
+a look at the installer log and try to figure out yourself what
+happened. All logging is done in
+<GNUSTEP_INSTALL_DIR>\Development\MSYS\1.0\Installer\log.
+
+If that doesn't help you, contact either tkoelman@xs4all.nl or
+woudshoo@xs4all.nl.  Include in the mail the file 
+<GNUSTEP_INSTALL_DIR>\installer.tar.bz2, which is created
+when the build-failed-dialog shows itself.

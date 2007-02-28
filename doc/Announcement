@@ -1,0 +1,44 @@
+GNUstep Development environment installer 0.5 for Windows
+---------------------------------------------------------
+
+I created a new version of the experimental installer for Windows that
+contains basically everything needed to build applications with
+GNUstep base. It can be downloaded from
+ftp://ftp.gnustep.org/pub/gnustep/windows/ . Here you'll find a file
+called README-0.5 (please read!) and
+Install-GNUstep-Development-Environment-0.5.exe, the installer itself.
+
+What it does is the following:
+- Install MSYS + MinGW
+- Copy all needed sources and binaries to the system
+- Optionally actually build the base libary
+
+I think this is quite handy to quickly see whether the base sources
+compile out of the box under Windows. I can create an installer for
+given tags of the CVS repository to make a package that can easily be
+distributed to and tested on several systems.
+
+The installer lets you choose an installation directory, which in the
+end will be a completely self contained development environment that
+can link against GNUstep base. Deleting this tree deletes everything
+that is actually installed.
+
+Changed from 0.4.1 to 0.5:
+- Contains base and make 1.7.0
+- Changed paths in install scripts to reflect new hierarchy of 1.7.0
+- Contains libobjc 1.3.0
+- Contains MSYS 1.0.9-snapshot 2003.06.11-1
+- Tests whether building actually succeeded
+- Creates .tar.bz2 file containing all logs when building failed
+- Added file Bugs containing info what to do when bug in installer
+  is found
+- Used new version of Inno setup (4.0.2 beta), which
+  enabled me to use solid compression, reducing the installer
+  by 2 MB
+- The installer tests whether the installation directory contains
+  spaces
+
+Give it a whirl and tell me what you think. All questions and
+suggestions are welcome.
+
+Tom Koelman
